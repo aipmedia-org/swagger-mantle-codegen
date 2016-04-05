@@ -1,0 +1,34 @@
+{{#models}}
+{{#model}}
+#import "{{classname}}.h"
+
+@implementation {{classname}}
+
+#pragma mark -
+#pragma mark *** MTLJSONSerializing ***
+#pragma mark -
+
++ (NSDictionary*)JSONKeyPathsByPropertyKey
+{
+    return @{
+             {{#vars}}@"{{name}}": @"{{baseName}}"{{#hasMore}},{{/hasMore}}
+             {{/vars}}};
+}
+
+{{#vars}}
+{{^isPrimitiveType}}
++ (NSValueTransformer*){{name}}JSONTransformer
+{
+{{#isNotContainer}}
+    return [MTLJSONAdapter dictionaryTransformerWithModelClass:[{{complexType}} class]];
+{{/isNotContainer}}
+{{^isNotContainer}}
+    return [MTLJSONAdapter arrayTransformerWithModelClass:[{{complexType}} class]];
+{{/isNotContainer}}
+}
+
+{{/isPrimitiveType}}
+{{/vars}}
+{{/model}}
+@end
+{{/models}}

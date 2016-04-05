@@ -1,0 +1,14 @@
+#import "{{classPrefix}}BaseObject.h"
+
+{{#imports}}#import "{{import}}.h"
+{{/imports}}
+
+{{#models}}
+{{#model}}
+@interface {{classname}} : {{#parent}}{{{parent}}}{{/parent}}{{^parent}}{{classPrefix}}BaseObject{{/parent}}
+
+{{#vars}}@property (nonatomic) {{#isContainer}}{{#complexType}}NSArray<{{complexType}}*>*{{/complexType}}{{^complexType}}{{{ datatype }}}{{/complexType}}{{/isContainer}}{{^isContainer}}{{{ datatype }}}{{/isContainer}} {{name}}; {{#required}}// [required] {{#description}}{{{description}}}{{/description}}{{/required}}{{^required}}{{#description}}// {{{description}}}{{/description}}{{/required}}
+{{/vars}}
+@end
+{{/model}}
+{{/models}}
