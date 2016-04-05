@@ -7,7 +7,7 @@
 @implementation {{classname}}
 
 {{#operation}}
-+ (void){{summary}}{{#allParams}}{{^secondaryParam}}With{{/secondaryParam}}{{/allParams}}{{#allParams}}{{#secondaryParam}} {{paramName}}{{/secondaryParam}}:({{{dataType}}}){{paramName}}{{^hasMore}} s{{/hasMore}}{{/allParams}}{{^allParams}}WithS{{/allParams}}uccess:(void (^)({{#returnBaseType}}{{returnType}} response{{/returnBaseType}}{{^returnBaseType}}id unused{{/returnBaseType}}))successBlock error:(void (^)(NSError* error))errorBlock
++ (void){{operationId}}{{#allParams}}{{^secondaryParam}}With{{/secondaryParam}}{{/allParams}}{{#allParams}}{{#secondaryParam}} {{paramName}}{{/secondaryParam}}:({{{dataType}}}){{paramName}}{{^hasMore}} s{{/hasMore}}{{/allParams}}{{^allParams}}WithS{{/allParams}}uccess:(void (^)({{#returnBaseType}}{{returnType}} response{{/returnBaseType}}{{^returnBaseType}}id unused{{/returnBaseType}}))successBlock error:(void (^)(NSError* error))errorBlock
 {
     {{#allParams}}{{#required}}if ({{paramName}} == nil) [NSException raise:@"Invalid parameter" format:@"Missing the required parameter `{{paramName}}` when calling `{{nickname}}`"];{{/required}}
     {{/allParams}}

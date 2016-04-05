@@ -235,6 +235,7 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
     @Override
     public String toModelName(String type) {
         type = type.replaceAll("[^0-9a-zA-Z_]", "_");
+        type = type.replace("Model","");
 
         // language build-in classes
         if (typeMapping.keySet().contains(type) ||
@@ -242,11 +243,11 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
                 importMapping.values().contains(type) ||
                 defaultIncludes.contains(type) ||
                 languageSpecificPrimitives.contains(type)) {
-            return camelize(type);
+            return camelize(type).replace("$","");
         }
         // custom classes
         else {
-            return classPrefix + camelize(type);
+            return classPrefix + camelize(type).replace("$","");
         }
     }
 
@@ -341,16 +342,6 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
     }
 
     @Override
-    public String escapeText(String input) {
-        if (input != null && input.length() > 1) {
-            String str = camelize(super.escapeText(input).replace(" ", "_"));
-            str = Character.toLowerCase(str.charAt(0)) + str.substring(1);
-            return str;
-        }
-        return input;
-    }
-
-    @Override
     public String toOperationId(String operationId) {
         // throw exception if method name is empty
         if (StringUtils.isEmpty(operationId)) {
@@ -362,7 +353,15 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
             throw new RuntimeException(operationId + " (reserved word) cannot be used as method name");
         }
 
-        return camelize(sanitizeName(operationId), true);
+        operationId = operationId.replace("Format", "");
+        operationId = camelize(operationId);
+        operationId = operationId.replace("GET", "get");
+        operationId = operationId.replace("POST", "post");
+        operationId = operationId.replace("PUT", "put");
+        operationId = operationId.replace("DELETE", "delete");
+        operationId = operationId.replace("PATCH", "patch");
+                
+        return operationId;
     }
 
     public void setClassPrefix(String classPrefix) {
