@@ -19,7 +19,7 @@
     dispatch_once(&onceToken, ^{ [(NSMutableDictionary*)[self modelClassesByResourcePath] setObject:[{{returnBaseType}} class] forKey:[req.path pathPattern]]; });
     {{/returnBaseType}}
     {{#pathParams}}if ({{paramName}} != nil) req.pathParams[@"{{baseName}}"] = {{paramName}};{{/pathParams}}
-    {{#queryParams}}if ({{paramName}} != nil) req.queryParams[@"{{baseName}}"] = {{paramName}};{{/queryParams}}{{#bodyParam}}req.body = [{{paramName}} toDictionary];{{/bodyParam}}{{^bodyParam}}{{#formParams}}{{#notFile}}
+    {{#queryParams}}if ({{paramName}} != nil) req.queryParams[@"{{baseName}}"] = {{paramName}};{{/queryParams}}{{#bodyParam}}[req.queryParams addEntriesFromDictionary:[{{paramName}} toDictionary]];{{/bodyParam}}{{^bodyParam}}{{#formParams}}{{#notFile}}
     if ({{paramName}} != nil) req.queryParams[@"{{baseName}}"] = {{paramName}};{{/notFile}}{{#isFile}}{{/isFile}}{{/formParams}}{{/bodyParam}}
 
     req.successBlock = successBlock;

@@ -10,11 +10,13 @@
 
 @implementation BaseApi
 
-+ (instancetype)sharedInstance
++ (BaseApi*)sharedInstance
 {
-    static id sharedInstance = nil;
+    static BaseApi* sharedInstance = nil;
     static dispatch_once_t once = 0;
-    dispatch_once(&once, ^{ sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]]; });
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
+    });
     return sharedInstance;
 }
 
@@ -44,6 +46,14 @@
     [request logURLRequest:task.originalRequest];
 #endif
     [task resume];
+}
+
++ (void)setAuthToken:(NSString*)token
+{
+    if (token == nil)
+        [self sharedInstance].session.configuration.HTTPAdditionalHeaders = nil;
+    else
+        [self sharedInstance].session.configuration.HTTPAdditionalHeaders = @{@"Authorization": [NSString stringWithFormat:@"token %@", token]};
 }
 
 @end
