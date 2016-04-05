@@ -1,3 +1,5 @@
+// This file was generated automatically. Please don't edit it manually.
+
 #import "BaseObject.h"
 
 @implementation BaseObject
