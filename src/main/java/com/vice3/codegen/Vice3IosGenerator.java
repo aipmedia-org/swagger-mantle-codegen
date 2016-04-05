@@ -12,7 +12,7 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
     protected Set<String> foundationClasses = new HashSet<String>();
     protected String modelsFolder = "Models";
     protected String apiFolder = "Networking";
-    protected String classPrefix = "";
+    protected String classPrefix = "Mtl";
     protected String[] specialWords = {"new", "copy"};
 
     public Vice3IosGenerator() {
@@ -284,12 +284,12 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
 
     @Override
     public String toApiName(String name) {
-        return classPrefix + camelize(name) + "Api";
+        return camelize(name) + "Api";
     }
 
     @Override
     public String toApiFilename(String name) {
-        return classPrefix + camelize(name) + "Api";
+        return camelize(name) + "Api";
     }
 
     @Override
@@ -360,7 +360,7 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
         operationId = operationId.replace("PUT", "put");
         operationId = operationId.replace("DELETE", "delete");
         operationId = operationId.replace("PATCH", "patch");
-                
+
         return operationId;
     }
 
