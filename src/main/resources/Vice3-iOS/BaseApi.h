@@ -1,6 +1,6 @@
 // This file was generated automatically. Please don't edit it manually.
 
-#import <Overcoat.h>
+#import <Overcoat/Overcoat.h>
 #import "ApiRequest.h"
 
 #if DEBUG
