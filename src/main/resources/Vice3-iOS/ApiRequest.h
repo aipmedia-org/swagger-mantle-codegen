@@ -8,8 +8,8 @@
 @property (nonatomic) NSString* path;
 @property (nonatomic) NSMutableDictionary* pathParams;
 @property (nonatomic) NSMutableDictionary* queryParams;
-@property (nonatomic, copy) void (^successBlock)(id response);
-@property (nonatomic, copy) void (^errorBlock)(NSError* error);
+@property (nonatomic, copy) void (^successBlock)(id result, NSHTTPURLResponse* response);
+@property (nonatomic, copy) void (^errorBlock)(NSError* error, NSHTTPURLResponse* response);
 
 - (void)logURLRequest:(NSURLRequest*)request;
 

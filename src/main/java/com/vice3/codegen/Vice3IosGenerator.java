@@ -9,6 +9,7 @@ import java.io.File;
 import org.apache.commons.lang.StringUtils;
 
 public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
+    public static final String CLASS_PREFIX = "classPrefix";
     protected Set<String> foundationClasses = new HashSet<String>();
     protected String modelsFolder = "Models";
     protected String apiFolder = "Networking";
@@ -125,6 +126,10 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
     public void processOpts() {
         super.processOpts();
 
+        if (additionalProperties.containsKey(CLASS_PREFIX))
+            setClassPrefix((String) additionalProperties.get(CLASS_PREFIX));
+        additionalProperties.put(CLASS_PREFIX, classPrefix);
+
         modelPackage = modelsFolder;
         apiPackage = apiFolder;
 
@@ -134,8 +139,8 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
         supportingFiles.add(new SupportingFile("NSString+Path.m", apiFolder, "NSString+Path.m"));
         supportingFiles.add(new SupportingFile("BaseObject.h", modelsFolder, "BaseObject.h"));
         supportingFiles.add(new SupportingFile("BaseObject.m", modelsFolder, "BaseObject.m"));
-        supportingFiles.add(new SupportingFile("BaseApi.h", apiFolder, "BaseApi.h"));
-        supportingFiles.add(new SupportingFile("BaseApi.m", apiFolder, "BaseApi.m"));
+        supportingFiles.add(new SupportingFile("BaseApi-header.mustache", apiFolder, "BaseApi.h"));
+        supportingFiles.add(new SupportingFile("BaseApi-body.mustache", apiFolder, "BaseApi.m"));
     }
 
     @Override

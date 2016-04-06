@@ -1,4 +1,4 @@
-#import "{{classPrefix}}BaseApi.h"
+#import "BaseApi.h"
 {{#imports}}#import "{{import}}.h"
 {{/imports}}
 
@@ -16,7 +16,7 @@
 ///  @param {{paramName}} {{{description}}}{{/allParams}}
 ///
 
-+ (void){{operationId}}{{#allParams}}{{^secondaryParam}}With{{/secondaryParam}}{{/allParams}}{{#allParams}}{{#secondaryParam}} {{paramName}}{{/secondaryParam}}:({{{dataType}}}){{paramName}}{{^hasMore}} s{{/hasMore}}{{/allParams}}{{^allParams}}WithS{{/allParams}}uccess:(void (^)({{#returnBaseType}}{{returnType}} response{{/returnBaseType}}{{^returnBaseType}}id unused{{/returnBaseType}}))successBlock error:(void (^)(NSError* error))errorBlock;
++ (void){{operationId}}{{#allParams}}{{^secondaryParam}}With{{/secondaryParam}}{{/allParams}}{{#allParams}}{{#secondaryParam}} {{paramName}}{{/secondaryParam}}:({{{dataType}}}){{paramName}}{{^hasMore}} s{{/hasMore}}{{/allParams}}{{^allParams}}WithS{{/allParams}}uccess:(void (^)({{#returnBaseType}}{{returnType}} result{{/returnBaseType}}{{^returnBaseType}}id unused{{/returnBaseType}}, NSHTTPURLResponse* response))successBlock error:(void (^)({{classPrefix}}Error* error, NSHTTPURLResponse* response))errorBlock;
 {{/operation}}
 {{/operations}}
 
