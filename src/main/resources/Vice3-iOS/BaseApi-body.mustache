@@ -42,17 +42,17 @@
         NSLog(@"%@: %@ [%ld]", error != nil ? @"NAK" : @"ACK", task.originalRequest.URL.absoluteString, response.HTTPResponse.statusCode);
 #endif
         {{classPrefix}}Error* ierror = nil;
-        if (error != nil)
+        if ([response.result isKindOfClass:[{{classPrefix}}Error class]])
+            ierror = response.result;
+        else if (error != nil)
         {
             ierror = [{{classPrefix}}Error new];
             ierror.errorCode = [NSString stringWithFormat:@"%ld", error.code];
             ierror.message = [error localizedDescription];
         }
-        else if ([response.result isKindOfClass:[{{classPrefix}}Error class]])
-            ierror = response.result;
         
         if (ierror != nil)
-            request.errorBlock(error, response.HTTPResponse);
+            request.errorBlock(ierror, response.HTTPResponse);
         else
             request.successBlock(response.result, response.HTTPResponse);
     }];
