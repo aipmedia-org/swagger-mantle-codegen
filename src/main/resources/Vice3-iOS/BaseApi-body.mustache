@@ -24,10 +24,9 @@
 
 + (NSDictionary*)modelClassesByResourcePath
 {
-    static id modelClassesByResourcePath = nil;
-    static dispatch_once_t once = 0;
-    dispatch_once(&once, ^{ modelClassesByResourcePath = [NSMutableDictionary dictionary]; });
-    return modelClassesByResourcePath;
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+{{routes}}
+            , nil];
 }
 
 + (NSDictionary*)errorModelClassesByResourcePath

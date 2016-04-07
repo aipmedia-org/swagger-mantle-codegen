@@ -10,10 +10,12 @@ import org.apache.commons.lang.StringUtils;
 
 public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
     public static final String CLASS_PREFIX = "classPrefix";
+    public static final String ROUTES_LIST = "routes";
     protected Set<String> foundationClasses = new HashSet<String>();
     protected String modelsFolder = "Models";
     protected String apiFolder = "Networking";
     protected String classPrefix = "Mtl";
+    protected Set<String> routes = new HashSet<String>();
     protected String[] specialWords = {"new", "copy"};
 
     public Vice3IosGenerator() {
@@ -421,6 +423,23 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
         }
 
         return null;
+    }
+
+    @Override
+    public Map<String, Object> postProcessOperations(Map<String, Object> objs) {
+        Map<String, Object> operations = (Map<String, Object>) objs.get("operations");
+        if (operations != null) {
+            List<CodegenOperation> ops = (List<CodegenOperation>) operations.get("operation");          
+            for (CodegenOperation operation : ops) {
+                if (operation.returnBaseType != null)
+                {
+                    String str = String.format("            NSClassFromString(@\"%s\"), [@\"%s\" pathPattern]", operation.returnBaseType, operation.path);
+                    routes.add(str);
+                }
+            }
+        }
+        additionalProperties.put(ROUTES_LIST, String.join(String.format(",%n"),routes.toArray(new String[0])));
+        return objs;
     }
 
 }
