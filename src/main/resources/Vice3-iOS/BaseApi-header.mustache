@@ -11,6 +11,5 @@
 
 @interface BaseApi : OVCHTTPSessionManager
 + (BaseApi*)sharedInstance;
-+ (void)setAuthToken:(NSString*)token;
 + (void)sendRequest:(ApiRequest*)request;
 @end

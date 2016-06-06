@@ -38,7 +38,7 @@
 {
     NSURLSessionDataTask* task = [[self sharedInstance] _dataTaskWithHTTPMethod:request.method URLString:[request.path pathWithParams:request.pathParams] parameters:request.queryParams completion:^(OVCResponse* response, NSError* error) {
 #if ENABLE_LOGS
-        NSLog(@"%@: %@ [%ld]", error != nil ? @"NAK" : @"ACK", task.originalRequest.URL.absoluteString, response.HTTPResponse.statusCode);
+        NSLog(@"%@: %@ [%ld]", error != nil ? @"NAK" : @"ACK", response.HTTPResponse.URL.absoluteString, response.HTTPResponse.statusCode);
 #endif
         {{classPrefix}}Error* ierror = nil;
         if ([response.result isKindOfClass:[{{classPrefix}}Error class]])
@@ -46,7 +46,7 @@
         else if (error != nil)
         {
             ierror = [{{classPrefix}}Error new];
-            ierror.errorCode = [NSString stringWithFormat:@"%ld", error.code];
+            ierror.code = [NSString stringWithFormat:@"%ld", error.code];
             ierror.message = [error localizedDescription];
         }
         
@@ -62,14 +62,6 @@
     [request logURLRequest:task.originalRequest];
 #endif
     [task resume];
-}
-
-+ (void)setAuthToken:(NSString*)token
-{
-    if (token == nil)
-        [self sharedInstance].session.configuration.HTTPAdditionalHeaders = nil;
-    else
-        [self sharedInstance].session.configuration.HTTPAdditionalHeaders = @{@"Authorization": [NSString stringWithFormat:@"token %@", token]};
 }
 
 @end

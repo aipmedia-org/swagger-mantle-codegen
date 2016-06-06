@@ -2,7 +2,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MtlError;
+@class Error;
 
 @interface ApiRequest : NSObject
 
@@ -11,7 +11,7 @@
 @property (nonatomic) NSMutableDictionary* pathParams;
 @property (nonatomic) NSMutableDictionary* queryParams;
 @property (nonatomic, copy) void (^successBlock)(id result, NSHTTPURLResponse* response);
-@property (nonatomic, copy) void (^errorBlock)(MtlError* error, NSHTTPURLResponse* response);
+@property (nonatomic, copy) void (^errorBlock)(Error* error, NSHTTPURLResponse* response);
 
 - (void)logURLRequest:(NSURLRequest*)request;
 

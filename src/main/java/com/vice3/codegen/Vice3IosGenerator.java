@@ -14,7 +14,7 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
     protected Set<String> foundationClasses = new HashSet<String>();
     protected String modelsFolder = "Models";
     protected String apiFolder = "Networking";
-    protected String classPrefix = "Mtl";
+    protected String classPrefix = "";
     protected Set<String> routes = new HashSet<String>();
     protected String[] specialWords = {"new", "copy"};
 
@@ -367,6 +367,10 @@ public class Vice3IosGenerator extends DefaultCodegen implements CodegenConfig {
         operationId = operationId.replace("PUT", "put");
         operationId = operationId.replace("DELETE", "delete");
         operationId = operationId.replace("PATCH", "patch");
+
+        char c[] = operationId.toCharArray();
+        c[0] += 32;
+        operationId = new String(c);        
 
         return operationId;
     }
