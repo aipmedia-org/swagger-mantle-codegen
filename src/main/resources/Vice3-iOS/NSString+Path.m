@@ -7,11 +7,8 @@
 - (NSString*)pathPattern
 {
     NSString* pathPattern = self;
-    NSRegularExpression* regexp = [NSRegularExpression regularExpressionWithPattern:@"{.*}" options:kNilOptions error:nil];
-    NSRange range = NSMakeRange(0, 0);
-    while ((range = [regexp firstMatchInString:pathPattern options:NSMatchingReportProgress range:NSMakeRange(0, self.length)].range).length > 0)
-        pathPattern = [pathPattern stringByReplacingCharactersInRange:range withString:@"*"];
-    return pathPattern;
+    NSRegularExpression* regexp = [NSRegularExpression regularExpressionWithPattern:@"\\{.*\\}" options:kNilOptions error:nil];
+    return [regexp stringByReplacingMatchesInString:pathPattern options:0 range:NSMakeRange(0, [pathPattern length]) withTemplate:@"*"];
 }
 
 - (NSString*)pathWithParams:(NSDictionary*)params
